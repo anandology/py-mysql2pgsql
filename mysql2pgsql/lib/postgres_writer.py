@@ -61,7 +61,7 @@ class PostgresWriter(object):
             elif column['type'] == 'boolean':
                 #default = (" DEFAULT %s" % ('true' if int(column['default']) == 1 else 'false')) if t(default) else None
                 #return default, 'boolean'
-                return default + ' CHECK (%s in (0, 1))' % column['name'], 'smallint'
+                return default, 'smallint'
             elif column['type'] == 'float':
                 default = (" DEFAULT %s" % (column['default'] if t(column['default']) else 'NULL')) if t(default) else None
                 return default, 'real'
