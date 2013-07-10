@@ -118,9 +118,10 @@ class PostgresWriter(object):
             elif 'bit(' in column['type']:
                 return ' DEFAULT %s' % column['default'].upper() if column['default'] else column['default'], 'varbit(%s)' % re.search(r'\((\d+)\)', column['type']).group(1)
             elif 'set(' in column['type']:
-                if default:
-                    default = ' DEFAULT ARRAY[%s]::text[]' % ','.join(QuotedString(v).getquoted() for v in re.search(r"'(.*)'", default).group(1).split(','))
-                return default, 'text[]'
+                #if default:
+                #    default = ' DEFAULT ARRAY[%s]::text[]' % ','.join(QuotedString(v).getquoted() for v in re.search(r"'(.*)'", default).group(1).split(','))
+                #return default, 'text[]'
+                return default, 'text'
             else:
                 raise Exception('unknown %s' % column['type'])
 
