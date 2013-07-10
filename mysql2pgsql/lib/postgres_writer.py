@@ -59,8 +59,9 @@ class PostgresWriter(object):
                 default = (" DEFAULT %s" % (column['default'] if t(column['default']) else 'NULL')) if t(default) else None
                 return default, 'smallint'
             elif column['type'] == 'boolean':
-                default = (" DEFAULT %s" % ('true' if int(column['default']) == 1 else 'false')) if t(default) else None
-                return default, 'boolean'
+                #default = (" DEFAULT %s" % ('true' if int(column['default']) == 1 else 'false')) if t(default) else None
+                #return default, 'boolean'
+                return default + ' CHECK (%s in (0, 1))' % column['name'], 'smallint'
             elif column['type'] == 'float':
                 default = (" DEFAULT %s" % (column['default'] if t(column['default']) else 'NULL')) if t(default) else None
                 return default, 'real'
@@ -157,7 +158,9 @@ class PostgresWriter(object):
                     row[index] = row[index].replace('\\', r'\\').replace('\n', r'\n').replace('\t', r'\t').replace('\r', r'\r').replace('\0', '')
             elif column_type == 'boolean':
                 # We got here because you used a tinyint(1), if you didn't want a bool, don't use that type
-                row[index] = 't' if row[index] not in (None, 0) else 'f' if row[index] == 0 else row[index]
+                ##row[index] = 't' if row[index] not in (None, 0) else 'f' if row[index] == 0 else row[index]
+                ## XXX-Anand: we are considering boolean as smallint only
+                pass
             elif  isinstance(row[index], (date, datetime)):
                 if  isinstance(row[index], datetime) and self.tz:
                     try:
