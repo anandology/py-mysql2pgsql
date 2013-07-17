@@ -45,7 +45,7 @@ class PostgresWriter(object):
 
             if column['type'] == 'char':
                 default = ('%s::char' % default) if t(default) else None
-                return default, 'character(%s)' % column['length']
+                return default, 'character varying(%s)' % column['length']
             elif column['type'] == 'varchar':
                 default = ('%s::character varying' % default) if t(default) else None
                 return default, 'character varying(%s)' % column['length']
