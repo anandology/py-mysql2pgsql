@@ -100,8 +100,8 @@ class MysqlReader(object):
                 return 'tinyint'
             elif data_type.startswith('tinyint') or data_type.startswith('year('):
                 return 'tinyint'
-            elif data_type.startswith('bigint') and 'unsigned' in data_type:
-                return 'numeric'
+            #elif data_type.startswith('bigint') and 'unsigned' in data_type:
+            #   return 'numeric'
             elif re.search(r'^int.* unsigned', data_type) or \
                     (data_type.startswith('bigint') and 'unsigned' not in data_type):
                 return 'bigint'
