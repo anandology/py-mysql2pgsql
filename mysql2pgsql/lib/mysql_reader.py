@@ -131,7 +131,7 @@ class MysqlReader(object):
                 length = length_match.group(1) if length_match else \
                     precision_match.group(1) if precision_match else None
                 desc = {
-                    'name': res[0],
+                    'name': res[0].lower(), # convert column name to lowercase
                     'table_name': self.name,
                     'type': self._convert_type(res[1]),
                     'length': int(length) if length else None,
