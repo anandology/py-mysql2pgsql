@@ -131,7 +131,7 @@ class MysqlReader(object):
                 length = length_match.group(1) if length_match else \
                     precision_match.group(1) if precision_match else None
                 desc = {
-                    'name': res[0].lower(), # convert column name to lowercase
+                    'name': res[0].lower(), # convert column name to
                     'table_name': self.name,
                     'type': self._convert_type(res[1]),
                     'length': int(length) if length else None,
@@ -165,15 +165,15 @@ class MysqlReader(object):
                     continue
                 match_data = re_key_2.search(line)
                 if match_data:
-                    index['name'] = match_data.group(1)
-                    index['columns'] = [re.search(r'`(\w+)`', col).group(1) for col in match_data.group(2).split(',')]
+                    index['name'] = match_data.group(1).lower()
+                    index['columns'] = [re.search(r'`(\w+)`', col).group(1).lower() for col in match_data.group(2).split(',')]
                     index['unique'] = 'UNIQUE' in line
                     self._indexes.append(index)
                     continue
                 match_data = re_key_3.search(line)
                 if match_data:
                     index['primary'] = True
-                    index['columns'] = [re.sub(r'\(\d+\)', '', col.replace('`', '')) for col in match_data.group(1).split(',')]
+                    index['columns'] = [re.sub(r'\(\d+\)', '', col.replace('`', '')).lower() for col in match_data.group(1).split(',')]
                     self._indexes.append(index)
                     continue
 
